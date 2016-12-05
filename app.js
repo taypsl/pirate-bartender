@@ -49,18 +49,19 @@ $(document).ready(function(){
 	function Bartender(){
 		this.createDrink = function() {
 			var userChoice;
-			this.createDrink = [];
+			this.newDrink = [];
 			for (userChoice in state.userPreferences) {
 				if(state.userPreferences[userChoice]) {
-					this.createDrink.push(ingredients.randomChoice(userChoice).ingredient)
+					this.newDrink.push(ingredients.randomChoice(userChoice).ingredient)
 				}
 			};
 		}
 	}
 
+//not sure how to use this yet... 
 	function randomChoice(){
-	   	var newNumber = Math.floor((Math.random() * 3) + 0);
-	   	return newNumber
+	   	var randomNumber = Math.floor((Math.random());
+	   	return randomNumberm
 	}
 
 //listeners
