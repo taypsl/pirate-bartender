@@ -36,13 +36,6 @@ $(document).ready(function(){
 	class Bartender {
 		constructor(userPreferences){
 			this.createDrink = function(){
-				var userChoice;
-				this.newDrink = [];
-				for (userChoice in userPreferences) {
-					if(userPreferences[userChoice]) {
-						this.newDrink.push(ingredients.randomChoice(userChoice).ingredient)
-					}
-				};
 			}
 		}
 	}
