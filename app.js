@@ -22,21 +22,51 @@ $(document).ready(function(){
 	}
 
 	class Pantry {
-		constructor(ingredients){
-			this.ingredients = ingredients;
+		constructor(ingredientsList){
+			this.ingredients = {}; // want object like --> { type: 'salty', text: ['ing1','ing2','ing3'] }
+			for (var i=0; i<ingredientsList.length; i++){
+				var currentIngredient = ingredientsList[i];
+				var currentIngredientType = currentIngredient.type;
+				if (!this.ingredients[currentIngredientType]) { // updated from (ingredientsList[i].Ingredient.type)
+					this.ingredients[currentIngredientType]=[];           // updated to have if(!) instead of if (true), else...
+				}
+				this.ingredients[currentIngredientType].push(currentIngredient);
+			}
 		}
 	}
 
-	class UserPreference {
-		constructor(type){
-			this.type = type;
+	class User {
+		constructor(){
+			this.preferences = [];
+		}
+		addPreferences(preference){
+			this.preferences.push(preference)
+		}
+	}
+	
+	class Drink {
+		constructor(){
+			this.ingredients = [];
+		}
+		addIngredients(ingredient){
+			this.ingredients.push(ingredient)
 		}
 	}
 
 	class Bartender {
-		constructor(userPreferences){
-			this.createDrink = function(){
+		constructor(){
+		}
+		createDrink(preferences){
+			var randomNumber;
+			var drinkOrder = new Drink();
+			for (var j=0; j<preferences.length; j++){
+				var userPreference = preferences[j];
+				var ingredientsListByType = drinkPantry.ingredients[userPreference];
+				var pickIngredient = ingredientsListByType[randomChoice(0, ingredientsListByType.length-1)];
+				drinkOrder.addIngredients(pickIngredient);
+
 			}
+				console.log(drinkOrder);
 		}
 	}
 
@@ -66,47 +96,49 @@ $(document).ready(function(){
 		new Question('fruity', 'Are ye one for a fruity finish?'),
 	];
 
+	var drinkPantry = new Pantry(ingredients);
+
+
 	// Logic
 	function randomChoice(min, max) {
     	return Math.floor(Math.random() * (max - min + 1) + min);
 	}	
 
 	// Render
-	function startQuestions(state){
-		$('h2').text(questions[state.currentQuestion].text);
-	}
-
 	function nextPage(state){
-		state.currentQuestion += 1;
 		$('h2').text(questions[state.currentQuestion].text);
 	}
 
+	function nextQuestion(state){
+		state.currentQuestion += 1;
+		nextPage(state);
+	}
+
+	function displayDrink(currentBartender){
+		$('.new-drink').text(drinkOrder);  //error
+		$('.bartender-questions').addClass('hidden');
+	}
+
+	// start the game
+	nextPage(state);
+	var currentUser = new User();
+	var currentBartender = new Bartender();
 
 	// listeners	
-	startQuestions(state);
-
-	$('.answer-no').on('click', function(e){
-		if (state.currentQuestion < questions.length) {
-			nextPage(state);
-		}
-		else {
-			Bartender.createDrink();
-		}})
-
-	$('.answer-yes').on('click', function(e){
+	$('.answer').on('click', function(e){
 		e.preventDefault();
 
-		if (state.currentQuestion < questions.length) {
+		if ($(this).attr('id') == "yes") {
 			var currentType = questions[state.currentQuestion].type
-			//var new UserPreference(currentType);
-			//userPreferences.push(currentType); 
-			nextPage(state);
+			currentUser.addPreferences(currentType);
+		}
+		if (state.currentQuestion < questions.length-1) {
+			nextQuestion(state);
 		}
 		else {
-			Bartender.createDrink();
+			currentBartender.createDrink(currentUser.preferences);
+			displayDrink(currentBartender);
 		}
-		console.log(ingredients);
-		console.log(questions);
 	})
 
 });
