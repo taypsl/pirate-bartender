@@ -6,6 +6,10 @@ $(document).ready(function(){
 		currentQuestion: 0,
 	}
 
+	var nouns = ['Chinchilla', 'Sea-Dog', 'Seaweed', 'Island', 'Cannon', 'Crow', 'Cutlass', 'Dagger', 'Gibbet', 'Hook', 'Keel', 'Scar', 'Sword', 'Tides', 'Parrot'];
+	var adjectives = ['Fluffy', 'Salty', 'Swashbuckling', 'Old', 'Lawless', 'Vengeful', 'Ruthless', 'Scurvy', 'Violent', 'Drunken'];
+
+
 	//constructor objects
 	class Question {
 		constructor(type, text){
@@ -27,8 +31,8 @@ $(document).ready(function(){
 			for (var i=0; i<ingredientsList.length; i++){
 				var currentIngredient = ingredientsList[i];
 				var currentIngredientType = currentIngredient.type;
-				if (!this.ingredients[currentIngredientType]) { // updated from (ingredientsList[i].Ingredient.type)
-					this.ingredients[currentIngredientType]=[];           // updated to have if(!) instead of if (true), else...
+				if (!this.ingredients[currentIngredientType]) { 
+					this.ingredients[currentIngredientType]=[];          
 				}
 				this.ingredients[currentIngredientType].push(currentIngredient);
 			}
@@ -47,9 +51,16 @@ $(document).ready(function(){
 	class Drink {
 		constructor(){
 			this.ingredients = [];
+			this.name = adjectives[randomChoice(0, adjectives.length-1)] + ' ' + nouns[randomChoice(0, nouns.length-1)];
 		}
 		addIngredients(ingredient){
 			this.ingredients.push(ingredient)
+		}
+		getDrinkIngredients(){
+			var drinkIngredients = this.ingredients.reduce(function(a, b) {
+ 				return a + '<li>' + b.ingredient + '</li>';
+			}, '<ul>');
+			return drinkIngredients + '</ul>'
 		}
 	}
 
@@ -57,16 +68,14 @@ $(document).ready(function(){
 		constructor(){
 		}
 		createDrink(preferences){
-			var randomNumber;
 			var drinkOrder = new Drink();
 			for (var j=0; j<preferences.length; j++){
 				var userPreference = preferences[j];
 				var ingredientsListByType = drinkPantry.ingredients[userPreference];
 				var pickIngredient = ingredientsListByType[randomChoice(0, ingredientsListByType.length-1)];
 				drinkOrder.addIngredients(pickIngredient);
-
 			}
-				console.log(drinkOrder);
+			return drinkOrder;
 		}
 	}
 
@@ -114,8 +123,9 @@ $(document).ready(function(){
 		nextPage(state);
 	}
 
-	function displayDrink(currentBartender){
-		$('.new-drink').text(drinkOrder);  //error
+	function displayDrink(drink){
+		$('#drink-name').html(drink.name);
+		$('#drink-ingredients').html(drink.getDrinkIngredients()); 
 		$('.bartender-questions').addClass('hidden');
 	}
 
@@ -136,8 +146,11 @@ $(document).ready(function(){
 			nextQuestion(state);
 		}
 		else {
-			currentBartender.createDrink(currentUser.preferences);
-			displayDrink(currentBartender);
+			var drinkOrder = currentBartender.createDrink(currentUser.preferences);
+			displayDrink(drinkOrder);
+			$('.new-drink').removeClass('hidden');
+			$('.bartender').addClass('bartender-2');
+			$('.scroll').addClass('scroll-2');
 		}
 	})
 

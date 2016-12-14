@@ -1,7 +1,147 @@
-.bartender-questions {
-	margin: 200px 0 0 200px;
+html, body {
+  margin: 0; 
+  padding: 0;
+  overflow: auto;
+}
+
+body {
+	background-color: #1b8986;
+}
+
+header {
+	background-color: #000000;
+	font-family: 'Ravi Prakash', cursive;
+	color: #ffffff;
+	font-size: 2em;
+	padding: 10px 0 0 20px;
+	width: 100%;
+}
+
+/* question container, bartender, and button styles */
+.container {
+	position: relative;
+
+}
+
+.bartender {
+	height: 250px;
+	width: 350px;
+	background: url("images/bb.png") no-repeat;
+	background-size: contain;
+	position: absolute;
+	display: inline-block;
+	top: 300px;
+	left: 50px;
+	margin-left: 20px;
+}
+
+/* scroll container with question text */
+.scroll {
+	height: 400px;
+	width: 300px;
+	background: url("images/scroll.png") no-repeat;
+	background-size: contain;
+	margin: 150px 50px 50px 450px;
+	display: inline-block;
+}
+
+.question-text, .new-drink {
+	font-family: 'Kaushan Script', cursive;
+	text-align: center;
+	padding: 60px 20px 10px 20px;
+	box-sizing: border-box;
+}
+
+.question-text {
+	font-size: 1.75em;
+}
+
+/* remove default button style */
+button{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background  : transparent;
+  font-family : inherit;
+  font-size   : 1em;
+  cursor      : pointer;
+}
+
+button::-moz-focus-inner{
+  padding : 0;
+  border  : 0;
+}
+
+/* add button style */
+.answer {
+	font-family: 'Kaushan Script', cursive;
+	font-size: 1.4em;
+	margin: 30px 0 0 45px;
+	display: block;
+	padding-left: 30px;
+}
+
+.answer:hover {
+	background-image: url("images/x-mark.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 20px 20px;
+	margin-right: 30px;
+}
+
+/* drink display styles */
+.bartender-2 {
+	height: 400px;
+	width: 500px;
+	background: url("images/bb-drink.png") no-repeat;
+	background-size: contain;
+	position: absolute;
+	display: inline-block;
+	top: 300px;
+	left: 350px;
+}
+
+.scroll-2 {
+	height: 400px;
+	width: 300px;
+	background: url("images/scroll.png") no-repeat;
+	background-size: contain;
+	margin: 150px 50px 50px 70px;
+	display: inline-block;
+}
+
+.new-drink {
+	font-size: 1.25em;
+}
+
+ul {
+	padding: 20px 0 0 0;
+	margin: 0 0 0 0;
 }
 
 .hidden {
 	display: none;
+}
+
+/* mobile */
+@media only screen and (max-width: 450px) {
+	html, body {
+		overflow: none;
+	}
+	.header {
+	}
+	.bartender, .bartender-2, .scroll, .scroll-2 {
+		display: block;
+		margin: 50px auto 0 auto;
+	}
+	.bartender, .bartender-2 {
+		height: 200px;
+		width: 300px;
+	}
+}
+
+@media only screen and (min-width: 450px) {
+	header {
+		position: fixed;
+	}
 }

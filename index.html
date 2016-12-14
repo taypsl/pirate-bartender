@@ -2,20 +2,40 @@
 <html>
 <head>
 	<title>Pirate Bartender</title>
+
+	<link rel="stylesheet" href="main.css">
+	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Ravi+Prakash" rel="stylesheet">
 	<link rel="stylesheet" href="main.css">
 
 </head>
 <body>
-	<div class="bartender-questions">
-		<h2 class="question-text"></h2>
-		<button class="answer" id="no"type="submit">
-			<span class="button-label">No, ya scalleywag</span>
-		<button class="answer" id="yes" type="submit">
-			<span class="button-label">Aye, matey</span>
+	<header>Pirate Bartender</header>
+
+	<div class="container">
+
+		<div class="scroll">
+			<div class="bartender-questions">
+				<h2 class="question-text"></h2>
+				<button class="answer" id="no"type="submit">
+					<span class="button-label">Nay, yer scalleywag</span>
+				</button>
+				<button class="answer" id="yes" type="submit">
+					<span class="button-label">Aye, matey</span>
+				</button>
+			</div>
+
+			<div class="new-drink hidden">
+				<h2 id="drink-name"></h2>
+				<div id="drink-ingredients"></div>
+			</div>
+		</div>
+
+		<div class="bartender"></div>
+		
 	</div>
 
-	<div class="new-drink"></div>
 	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="app.js"></script>
 </body>
